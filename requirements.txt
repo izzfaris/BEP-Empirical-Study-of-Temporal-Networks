@@ -1,0 +1,18 @@
+pandas==1.4.4
+matplotlib==3.7.2
+plotly==5.16.1
+networkx==3.1
+selenium==4.20.0
+beautifulsoup4==4.12.3
+requests==2.31.0
+tqdm==4.66.1
+regex
+scipy==1.13.0
+numpy==1.22.4
+-e git+https://github.com/pathpy/pathpyG.git#egg=pathpyG
+-f https://download.pytorch.org/whl/cu118
+torch
+torchvision
+torchaudio
+torch_geometric
+teneto
