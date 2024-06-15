@@ -15,4 +15,3 @@ torch
 torchvision
 torchaudio
 torch_geometric
-teneto
