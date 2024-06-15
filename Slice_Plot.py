@@ -22,7 +22,7 @@ def slice_plot(G:nx, title:str, ylabel:str):
     fig, ax = plt.subplots(figsize=(12, 8))
 
     # Draw nodes
-    color_map = plt.cm.jet(np.linspace(0, 1, len(nodes)))
+    color_map = plt.cm.gray(np.linspace(0, 0.8, len(nodes)))
     for node, node_idx in node_positions.items():
         for time, time_idx in time_positions.items():
             ax.plot(time_idx, node_idx, 'o', color=color_map[node_idx], markersize=10)
