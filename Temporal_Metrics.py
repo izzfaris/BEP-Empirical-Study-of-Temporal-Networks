@@ -12,7 +12,7 @@ def temporal_degree(G):
             temporal_degree_dict[v] += 1
     return temporal_degree_dict
 
-def find_temporal_shortest_paths(G, source, target, time_attr): #Potential function to be used
+def find_temporal_shortest_paths(G, source, target, time_attr): #Used for Betweenness Calculation
     shortest_paths = []
     min_length = float('inf')
     queue = deque([(source, [source], -float('inf'))])
@@ -79,9 +79,10 @@ def temporal_betweenness(G, time_attr='time'):
     
     return betweenness
 
-def temporal_closeness(G): #Philipp new
+def temporal_closeness(G, time_attr='time'):
     closeness = {}
     nodes = list(G.nodes())
+    N = len(nodes)
     
     for s in nodes:
         distance = {node: float('inf') for node in nodes}
@@ -93,20 +94,21 @@ def temporal_closeness(G): #Philipp new
             neighbors = G.successors(current_node) if G.is_directed() else G.neighbors(current_node)
             
             for neighbor in neighbors:
-                # Iterate over all edges between current_node and neighbor
                 for key in G[current_node][neighbor]:
-                    edge_time = G[current_node][neighbor][key]['time'] # take the time of the edge
-                    if isinstance(edge_time, Timestamp):
+                    edge_time = G[current_node][neighbor][key][time_attr]
+                    if isinstance(edge_time, datetime):
                         edge_time = edge_time.timestamp()  # Convert Timestamp to seconds
-                    # if edge is after current time but before any distance to neighbor previously recorded:
                     if current_time <= edge_time < distance[neighbor]: 
                         distance[neighbor] = edge_time
                         Q.append((neighbor, edge_time))
         
-        total_distance = sum([d for d in distance.values() if d != float('inf')])
-        reachable_nodes = len([d for d in distance.values() if d != float('inf')]) - 1
-        # closeness[s] = total_distance / reachable_nodes if reachable_nodes > 0 else 0
-        closeness[s] = (1/ (total_distance / reachable_nodes)) if reachable_nodes > 0 else 0
+        total_reciprocal_distance = sum([1/d for d in distance.values() if d != float('inf') and d != 0])
+        reachable_nodes = len([d for d in distance.values() if d != float('inf') and d != 0])
+        
+        if reachable_nodes > 0:
+            closeness[s] = total_reciprocal_distance / (N - 1)
+        else:
+            closeness[s] = 0
     
     return closeness
 
