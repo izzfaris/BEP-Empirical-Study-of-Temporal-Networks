@@ -14,7 +14,9 @@ def football_to_csv():
                   '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022','2023']
     Champions_League = pd.DataFrame()
 
+    # Scrape the data for the Champions League from 1992 to 2023
     for year in tqdm(full_years):
+        # Scrape the data for each round in the list
         for round in tqdm(list_of_rounds):
             df = sf.scrape_football(year, round)
             if df is not None:
@@ -30,6 +32,7 @@ def flights_to_csv():
     celebrity_list = ['Taylor Swift Plane 1', 'Taylor Swift Plane 2','Elon Musk', 'Donald Trump', 'Michael Bloomberg Plane 1', 'Michael Bloomberg Plane 2', 'Nike Corporation', 'Drake', 'Kylie Jenner', 'Kim Kardashian']
     Jets = pd.DataFrame()
 
+    # Scrape the data for the celebrities in the list
     for index, url_type in tqdm(enumerate(url_type)):
         df = sf.scrape_jet(url_type, celebrity_list[index])
         Jets = pd.concat([Jets, df], ignore_index=True)
@@ -39,5 +42,5 @@ def flights_to_csv():
 
 # Uncomment the function you want to run
 
-football_to_csv()
+# football_to_csv()
 # flights_to_csv()

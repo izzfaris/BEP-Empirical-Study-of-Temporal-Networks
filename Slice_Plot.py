@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-def slice_plot(G:nx, title:str, ylabel:str):
+def slice_plot(G, title, ylabel):
+    '''Plot a temporal network as a slice plot.
+        Input: G: a networkx graph object, title: the title of the plot, ylabel: the label of the y-axis
+        Output: a slice plot of the temporal network
+    '''
 
     # Extract edges from the graph
     temporal_edges = [(u, v, d['time']) for u, v, d in G.edges(data=True)]
